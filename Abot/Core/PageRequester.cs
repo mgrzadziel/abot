@@ -200,11 +200,14 @@ namespace Abot.Core
 
         protected virtual HttpWebRequest BuildRequestObject(Uri uri)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+            HttpWebRequest request = HttpWebRequest.Create(uri) as HttpWebRequest;
             request.AllowAutoRedirect = _config.IsHttpRequestAutoRedirectsEnabled;
             request.UserAgent = _config.UserAgentString;
             request.Accept = "*/*";
             request.ProtocolVersion = HttpVersion.Version10; //https://github.com/sjdirect/abot/issues/187
+
+
+
 
             if (_config.HttpRequestMaxAutoRedirects > 0)
                 request.MaximumAutomaticRedirections = _config.HttpRequestMaxAutoRedirects;
@@ -218,12 +221,27 @@ namespace Abot.Core
             if (_config.IsSendingCookiesEnabled)
                 request.CookieContainer = _cookieContainer;
 
-            //Supposedly this does not work... https://github.com/sjdirect/abot/issues/122
-            //if (_config.IsAlwaysLogin)
-            //{
-            //    request.Credentials = new NetworkCredential(_config.LoginUser, _config.LoginPassword);
-            //    request.UseDefaultCredentials = false;
-            //}
+
+            if (_config.IsNTLM)
+            {
+
+                request.PreAuthenticate = true;
+
+                request.Credentials = new NetworkCredential(_config.LoginUser, _config.LoginPassword, _config.LoginDomain);
+                request.AuthenticationLevel = System.Net.Security.AuthenticationLevel.MutualAuthRequested;
+
+
+                WebResponse resp = request.GetResponse();
+                resp.Close();
+
+                request = HttpWebRequest.Create(uri) as HttpWebRequest;
+                request.PreAuthenticate = true;
+                request.Credentials = new NetworkCredential(_config.LoginUser, _config.LoginPassword, _config.LoginDomain);
+                request.AuthenticationLevel = System.Net.Security.AuthenticationLevel.MutualAuthRequested;
+
+
+            }
+
             if (_config.IsAlwaysLogin)
             {
                 string credentials = Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes(_config.LoginUser + ":" + _config.LoginPassword));

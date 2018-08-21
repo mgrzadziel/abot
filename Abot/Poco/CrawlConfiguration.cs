@@ -228,6 +228,8 @@ namespace Abot.Poco
         /// Defines whatewer each request shold be autorized via login 
         /// </summary>
         public bool IsAlwaysLogin { get; set; }
+
+        public bool IsNTLM { get; set; }
         /// <summary>
         /// The user name to be used for autorization 
         /// </summary>
@@ -236,6 +238,8 @@ namespace Abot.Poco
         /// The password to be used for autorization 
         /// </summary>
         public string LoginPassword { get; set; }
+
+        public string LoginDomain { get; set; }
 
         #endregion
     }

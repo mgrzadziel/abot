@@ -47,7 +47,9 @@ namespace Abot.Tests.Unit.Poco
             Assert.AreEqual(0, unitUnderTest.MinRetryDelayInMilliseconds);
             Assert.AreEqual(null, unitUnderTest.LoginUser);
             Assert.AreEqual(null, unitUnderTest.LoginPassword);
+            Assert.AreEqual(null, unitUnderTest.LoginDomain);
             Assert.AreEqual(false, unitUnderTest.IsAlwaysLogin);
+            Assert.AreEqual(false, unitUnderTest.IsNTLM);
         }
 
 

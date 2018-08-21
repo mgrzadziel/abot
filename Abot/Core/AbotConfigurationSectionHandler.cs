@@ -98,6 +98,8 @@ namespace Abot.Core
             dest.IsAlwaysLogin = src.IsAlwaysLogin;
             dest.LoginUser = src.LoginUser;
             dest.LoginPassword = src.LoginPassword;
+            dest.LoginDomain = src.LoginDomain;
+            dest.IsNTLM = src.IsNTLM;
         }
 
         public static AbotConfigurationSectionHandler LoadFromXml()
@@ -119,6 +121,12 @@ namespace Abot.Core
             get { return (bool)this["isAlwaysLogin"]; }
         }
 
+        [ConfigurationProperty("isNTLM", IsRequired = false)]
+        public bool IsNTLM
+        {
+            get { return (bool)this["isNTLM"]; }
+        }
+
         /// <summary>
         /// The user name to be used for autorization 
         /// </summary>
@@ -134,6 +142,12 @@ namespace Abot.Core
         public string LoginPassword
         {
             get { return (string)this["loginPassword"]; }
+        }
+
+        [ConfigurationProperty("loginDomain", IsRequired = false)]
+        public string LoginDomain
+        {
+            get { return (string)this["loginDomain"]; }
         }
     }
     [Serializable]

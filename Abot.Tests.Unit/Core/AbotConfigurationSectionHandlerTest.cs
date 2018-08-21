@@ -102,8 +102,10 @@ namespace Abot.Tests.Unit.Core
             Assert.AreEqual(result.MaxRobotsDotTextCrawlDelayInSeconds, _uut.Politeness.MaxRobotsDotTextCrawlDelayInSeconds);
 
             Assert.AreEqual(result.IsAlwaysLogin, _uut.Authorization.IsAlwaysLogin);
+            Assert.AreEqual(result.IsNTLM, _uut.Authorization.IsNTLM);
             Assert.AreEqual(result.LoginPassword, _uut.Authorization.LoginPassword);
             Assert.AreEqual(result.LoginUser, _uut.Authorization.LoginUser);
+            Assert.AreEqual(result.LoginDomain, _uut.Authorization.LoginDomain);
 
             Assert.IsNotNull(result.ConfigurationExtensions);
             Assert.AreEqual(result.ConfigurationExtensions["key1"], _uut.ExtensionValues[0].Value);
